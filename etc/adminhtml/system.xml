@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="mageos" translate="label" sortOrder="900">
+            <label>MaxMind</label>
+        </tab>
+        <section id="maxmind_geoip_redirect" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>MaxMind GeoIP Redirect</label>
+            <tab>mageos</tab>
+            <resource>MageOS_MaxMindGeoipRedirect::config</resource>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="forced_ip" translate="label comment" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Force an IP for testing</label>
+                    <comment>Enter an IP to be geolocated to a specific country for testing. Leave blank to disable.</comment>
+                </field>
+                <field id="ip_check_method" type="select" translate="label comment" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>IP check method</label>
+                    <source_model>MageOS\MaxMindGeoipRedirect\Model\Config\Source\IpCheckMethod</source_model>
+                    <comment>Choose whether to geolocate the ip by querying MaxMind's updated databases in real time via API, or by querying the downloaded database locally.
+                        Real-time checking is more accurate, but may create malfunctions if the service is not reachable.
+                        Local database checking always works, but it is necessary to re-download the updated databases from MaxMind with some frequency.
+                    </comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="ip_database_import_cron" translate="label comment" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Cron expression for IP database import</label>
+                    <backend_model>MageOS\MaxMindGeoipRedirect\Model\Config\IpDatabaseImportCron</backend_model>
+                    <comment>Use Unix crontab syntax (ex. */15 * * * * -> every 15 minutes).
+                        Please note, you can only download a limited number per day,
+                        check the limits here before setting the schedule: https://www.maxmind.com/en/geolite-free-ip-geolocation-data
+                    </comment>
+                    <depends>
+                        <field id="maxmind_geoip_redirect/general/ip_check_method">local</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="last_db_import" type="label" translate="label comment" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Last IP database import</label>
+                    <backend_model>MageOS\MaxMindGeoipRedirect\Model\Config\IpDatabaseLastImport</backend_model>
+                    <depends>
+                        <field id="maxmind_geoip_redirect/general/ip_check_method">local</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="redirect_popup_text" translate="label comment" type="editor" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Confirmation Redirect Popup Text</label>
+                    <frontend_model>MageOS\MaxMindGeoipRedirect\Block\Adminhtml\System\Config\Editor</frontend_model>
+                    <tooltip>Confirmation Popup - a popup with information, 'Accept' and 'Decline' buttons.
+                        A customer is notified about redirection and is able to decline it and stay on the initial page.
+                    </tooltip>
+                    <comment>
+                        <![CDATA[<strong>Note:</strong>This text will be displayed to a customer on a popup before redirection happens. He will be allowed to decline redirection and stay at the initial website.
+                        You can use the variable {{geolocated_country}} to enter the name of the identified country.]]>
+                    </comment>
+                    <validate>required-entry</validate>
+                </field>
+            </group>
+            <group id="maxmind_settings" translate="label" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>GeoLite2 Settings</label>
+                <field id="account_id" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Account ID</label>
+                    <comment>Get your account ID by logging in here: https://www.maxmind.com/</comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="license_key" type="password" translate="label comment" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>License key</label>
+                    <comment>Get your license key here: https://www.maxmind.com/en/accounts/{your_account_id}/license-key</comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="database_download_url" translate="label comment" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Database url</label>
+                    <comment>Get the database link here: https://www.maxmind.com/en/accounts/{your_account_id}/geoip/downloads.
+                        Select the "Country" database, click on "Get Permalink" and copy the "Database URL"
+                    </comment>
+                    <depends>
+                        <field id="maxmind_geoip_redirect/general/ip_check_method">local</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+            </group>
+            <group id="country_redirect_settings" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Country redirect settings</label>
+                <field id="note" translate="label comment" type="label" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Instructions</label>
+                    <comment><![CDATA[Use this setting to set a store view redirection for your Magento instance. If you need to set a redirection to a website (not store view), please set the redirection to the default store view of the website<br>
+                        <strong>Move to individual store view configuration to associate countries and currency for redirection</strong>]]>
+                    </comment>
+                </field>
+                <field id="affected_countries" translate="label comment" type="multiselect" sortOrder="20" showInDefault="0" showInWebsite="0" showInStore="1">
+                    <label>Affected Countries</label>
+                    <can_be_empty>1</can_be_empty>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <comment>When a user is geolocated to one of the selected countries, they will be redirected to this store view</comment>
+                </field>
+                <field id="currency_mapping" translate="label comment" sortOrder="30" showInDefault="0" showInWebsite="0" showInStore="1">
+                    <label>Country to Currency Mapping</label>
+                    <frontend_model>MageOS\MaxMindGeoipRedirect\Block\Adminhtml\Form\Field\CurrencyMap</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+            </group>
+            <group id="restriction" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Restriction</label>
+                <field id="ips" translate="label comment" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Excepted IPs</label>
+                    <comment>Specifies IP addresses for which geolocation should not trigger and the popup should not appear, each URL in a separate line</comment>
+                </field>
+                <field id="urls" translate="label comment" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Excepted URLs</label>
+                    <comment><![CDATA[Specifies URLs in which geolocation should not trigger and the popup should not appear, each URL in a separate line<br>
+                        You can also insert regexes<br>
+                        <strong>Note: values that are not regexes, are excluded by partial occurence, so if you specify "blog" all URLs that contain "blog" will be excluded</strong>]]>
+                    </comment>
+                </field>
+                <field id="user_agents" translate="label comment" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Excepted User Agents</label>
+                    <comment><![CDATA[Specifies user agents for which geolocation should not trigger, each user agent in a separate line
+                    You can also insert regexes<br>
+                    <strong>Note: The values that are not regexes, are excluded by partial occurence, so if you specify "blog" all URLs that contain "blog" will be excluded</strong>]]>
+                    </comment>
+                </field>
+                <field id="first_visit_only" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>First visit redirect only</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If you select No, the popup will appear every time the user closes and reopens the site</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

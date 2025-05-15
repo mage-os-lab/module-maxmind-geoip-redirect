@@ -1,0 +1,40 @@
+{
+    "name": "mage-os/module-maxmind-geoip-redirect",
+    "description": "Manages geoip redirect using integration with the MaxMind GeoLite2",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "*",
+        "magento/module-directory": "100.4.*",
+        "magento/module-store": "101.1.*",
+        "magento/module-cookie": "100.4.*",
+        "geoip2/geoip2": "~2.0",
+        "ext-phar": "*",
+        "php": "^8.3"
+    },
+    "license": [
+        "GNU General Public License (GPL)",
+        "Academic Free License (AFL)"
+    ],
+    "authors": [
+        {
+            "name": "MK2Shop",
+            "email": "webmaster@mk2shop.com"
+        },
+        {
+            "name": "Samuele Martini",
+            "email": "samuele.rw@gmail.com"
+        },
+        {
+            "name": "Davide Lunardon",
+            "email": "dadolun@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "MageOS\\MaxMindGeoipRedirect\\": ""
+        }
+    }
+}

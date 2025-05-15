@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <maxmind_geoip_redirect>
+            <general>
+                <redirect_popup_text><![CDATA[We have geolocated you in <strong>{{geolocated_country}}</strong>. Do you want to update your location?]]></redirect_popup_text>
+            </general>
+            <maxmind_settings>
+                <database_download_url><![CDATA[https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz]]></database_download_url>
+            </maxmind_settings>
+            <restriction>
+                <first_visit_only>1</first_visit_only>
+            </restriction>
+        </maxmind_geoip_redirect>
+    </default>
+</config>

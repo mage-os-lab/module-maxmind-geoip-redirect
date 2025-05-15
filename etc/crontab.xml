@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="ip_database_import">
+        <job name="maxmind_ip_database_import" instance="MageOS\MaxMindGeoipRedirect\Cron\IpDatabaseImport" method="execute">
+            <config_path>crontab/ip_database_import/jobs/maxmind_ip_database_import/schedule/cron_expr</config_path>
+        </job>
+    </group>
+</config>

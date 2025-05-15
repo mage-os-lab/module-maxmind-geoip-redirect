@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- SERVICE CONTRACT -->
+    <preference for="MageOS\MaxMindGeoipRedirect\Api\GeoloateIPInterface" type="MageOS\MaxMindGeoipRedirect\Service\GeoloateIP"/>
+    <preference for="MageOS\MaxMindGeoipRedirect\Api\CurrencyManagerInterface" type="MageOS\MaxMindGeoipRedirect\Service\CurrencyManager"/>
+
+    <!-- CLI COMMAND -->
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="maxmind_geolite2redirect_geolocateip" xsi:type="object">MageOS\MaxMindGeoipRedirect\Console\Command\GeolocateIP</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- WYSIWYG VARIABLES -->
+    <type name="Magento\Variable\Model\Variable\Config">
+        <arguments>
+            <argument name="customVariables" xsi:type="array">
+                <item name="geolocated_country" xsi:type="array">
+                    <item name="label" xsi:type="string">Geolocated country</item>
+                    <item name="value" xsi:type="string">{{geolocated_country}}</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+</config>

@@ -1,0 +1,25 @@
+<?php
+/** @var $block Magento\Framework\View\Element\Template */
+/** @var $viewModel MageOS\MaxMindGeoipRedirect\ViewModel\Popup */
+$viewModel = $block->getViewModel();
+?>
+<div id="geoip-redirect-popup" class="geoip-redirect-popup" style="display: none;">
+    <div class="popup-content">
+        <p><?= $viewModel->getPopupMessage(); ?></p>
+        <a href="<?= $block->getUrl('maxmind/geoip/redirect'); ?>" class="action primary action-primary">
+            <?= __('Accept'); ?>
+        </a>
+        <a href="<?= $block->getUrl('maxmind/geoip/decline'); ?>" class="action secondary action-secondary">
+            <?= __('Decline'); ?>
+        </a>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "#geoip-redirect-popup": {
+            "MageOS_MaxMindGeoipRedirect/js/popup": {
+                "storeCode": "<?= $viewModel->getStoreCode(); ?>"
+            }
+        }
+    }
+</script>
