@@ -8,7 +8,7 @@
         "magento/module-store": "101.1.*",
         "magento/module-cookie": "100.4.*",
         "geoip2/geoip2": "~2.0",
-        "ext-phar": "*",
+        "splitbrain/php-archive": "^1.4.0",
         "php": "^8.3"
     },
     "license": [
