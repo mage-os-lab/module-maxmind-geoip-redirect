@@ -73,7 +73,7 @@ class Redirect implements HttpGetActionInterface
         }
 
         $targetStoreCode = $this->controllerHelper->getStoreViewByCountry($geolocationCountryCode);
-        $targetUrl = $this->getTargetStoreRedirectUrl($referrerUrl, $targetStoreCode);
+        $targetUrl = trim($this->getTargetStoreRedirectUrl($referrerUrl, $targetStoreCode), '/');
 
         $this->currencyManager->execute($targetStoreCode, $geolocationCountryCode);
 
