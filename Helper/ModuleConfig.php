@@ -132,7 +132,7 @@ class ModuleConfig extends AbstractHelper
         $currencyMapping = $this->serializer->unserialize($currencyMapping);
 
         foreach ($currencyMapping as $item) {
-            if ($item['country_list'] === $countryCode) {
+            if (in_array($countryCode, $item['country_list'])) {
                 return $item['currency_list'];
             }
         }
