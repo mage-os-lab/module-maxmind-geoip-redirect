@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.2] - 2025-06-23
+### Fixed
+- Removed double slash (`//`) in URLs after redirect.
+- Fixed country-to-currency mapping to ensure correct currency selection based on user location.
+
 ## [1.1.0] - 2025-06-05
 ### Changed
 - Replaced dependency on PHP Phar extension with `splitbrain/php-archive`
