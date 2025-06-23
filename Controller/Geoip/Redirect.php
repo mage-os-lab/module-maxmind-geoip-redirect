@@ -144,7 +144,7 @@ class Redirect implements HttpGetActionInterface
 
         $redirectUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_DIRECT_LINK);
         $redirectUrl .= $isUseStoreInUrl ? $targetStoreCode . '/' : '';
-        $redirectUrl .= $requestString;
+        $redirectUrl .= $requestString !== '/' ? $requestString : '';
         $redirectUrl .= !$isUseStoreInUrl ? '?___store=' . $targetStoreCode : '';
 
         return $redirectUrl;
