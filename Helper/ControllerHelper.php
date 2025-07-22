@@ -8,6 +8,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use MageOS\MaxMindGeoipRedirect\Helper\ModuleConfig as ModuleConfig;
 use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
 use Magento\Framework\Stdlib\CookieManagerInterface;
+use Magento\Directory\Model\ResourceModel\Country\CollectionFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Stdlib\Cookie\CookieSizeLimitReachedException;
@@ -27,7 +28,8 @@ class ControllerHelper
         protected StoreManagerInterface $storeManager,
         protected ModuleConfig $moduleConfig,
         protected CookieMetadataFactory $cookieMetadataFactory,
-        protected CookieManagerInterface $cookieManager
+        protected CookieManagerInterface $cookieManager,
+        protected CollectionFactory $countryCollectionFactory
     ) {
     }
 
@@ -86,5 +88,24 @@ class ControllerHelper
         } catch (InputException|CookieSizeLimitReachedException|FailureToSendException $e) {
             /** Do nothing */
         }
+    }
+
+    /**
+     * @param string $name
+     * @param int $storeId
+     * @return string
+     */
+    public function translateCountryName(string $name, int $storeId): string
+    {
+        $toLocale = $this->moduleConfig->getStoreLocale($storeId);
+        $countryCollection = $this->countryCollectionFactory->create();
+
+        foreach ($countryCollection as $country) {
+            if (strcasecmp($country->getName('en_US'), $name) === 0) {
+                return $country->getName($toLocale);
+            }
+        }
+
+        return $name;
     }
 }

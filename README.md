@@ -45,6 +45,8 @@ Navigate to: `Stores > Configuration > Mage-OS > MaxMind GeoIP Redirect`
 - **Cron expression for IP database import** (only for local database mode): Define how often to update the local database.
 - **Last IP database import** (read-only): Shows the date of the last database download.
 - **Confirmation Redirect Popup Text**: Customize the popup message. Use `{{geolocated_country}}` to dynamically include the country name.
+- **Confirmation Redirect Popup accept/decline button text**: Customize the popup button text.
+- **Confirmation Redirect Popup language mode**: Select the language for pop-up texts and buttons from the current store, target store, or global language.
 
 ### 2. GeoLite2 Settings (global scope)
 
@@ -56,7 +58,7 @@ Navigate to: `Stores > Configuration > Mage-OS > MaxMind GeoIP Redirect`
 
 ### 3. Country Redirect Settings (per store view)
 
-Change scope to the desired store view to configure these settings:
+Change scope to the desired store view to configure these settings (mandatory for mapping countries, optional for mapping currencies):
 
 - **Affected Countries**: List of countries associated with this store view.
 - **Country to Currency Mapping**: Match each country with its preferred currency.

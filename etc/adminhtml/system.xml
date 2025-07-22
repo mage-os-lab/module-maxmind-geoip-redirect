@@ -47,7 +47,7 @@
                     </depends>
                     <validate>required-entry</validate>
                 </field>
-                <field id="redirect_popup_text" translate="label comment" type="editor" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="redirect_popup_text" translate="label comment" type="editor" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Confirmation Redirect Popup Text</label>
                     <frontend_model>MageOS\MaxMindGeoipRedirect\Block\Adminhtml\System\Config\Editor</frontend_model>
                     <tooltip>Confirmation Popup - a popup with information, 'Accept' and 'Decline' buttons.
@@ -56,6 +56,24 @@
                     <comment>
                         <![CDATA[<strong>Note:</strong>This text will be displayed to a customer on a popup before redirection happens. He will be allowed to decline redirection and stay at the initial website.
                         You can use the variable {{geolocated_country}} to enter the name of the identified country.]]>
+                    </comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="redirect_popup_accept_button_text" translate="label" sortOrder="63" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Redirect popup accept button text</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="redirect_popup_decline_button_text" translate="label" sortOrder="64" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Redirect popup decline button text</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="popup_language_mode" translate="label comment" type="select" sortOrder="65" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Popup langue mode</label>
+                    <source_model>MageOS\MaxMindGeoipRedirect\Model\Config\Source\PopupLanguageMode</source_model>
+                    <comment><![CDATA[Selecting "target store", the text set for the store view to which the user will be redirected will be displayed.
+                        <br>Selecting "current store", the text set for the store view in which the user is currently located will be displayed.
+                        <br>Selecting "global", the default text will always be displayed.
+                        <br><b>Note: This selection also affects the Country Switcher popup tests.</b>]]>
                     </comment>
                     <validate>required-entry</validate>
                 </field>
@@ -97,7 +115,7 @@
                     <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                     <comment>When a user is geolocated to one of the selected countries, they will be redirected to this store view</comment>
                 </field>
-                <field id="currency_mapping" translate="label comment" sortOrder="30" showInDefault="0" showInWebsite="0" showInStore="1">
+                <field id="currency_mapping" translate="label comment" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Country to Currency Mapping</label>
                     <frontend_model>MageOS\MaxMindGeoipRedirect\Block\Adminhtml\Form\Field\CurrencyMap</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>

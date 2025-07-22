@@ -4,6 +4,8 @@
         <maxmind_geoip_redirect>
             <general>
                 <redirect_popup_text><![CDATA[We have geolocated you in <strong>{{geolocated_country}}</strong>. Do you want to update your location?]]></redirect_popup_text>
+                <redirect_popup_accept_button_text>Accept</redirect_popup_accept_button_text>
+                <redirect_popup_decline_button_text>Decline</redirect_popup_decline_button_text>
             </general>
             <maxmind_settings>
                 <database_download_url><![CDATA[https://download.maxmind.com/geoip/databases/GeoLite2-Country/download?suffix=tar.gz]]></database_download_url>

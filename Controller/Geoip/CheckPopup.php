@@ -113,6 +113,47 @@ class CheckPopup implements HttpGetActionInterface
             ]
         );
 
-        return $result->setData($response);
+        $currentStoreId = $currentStore->getId();
+        $targetStoreId = $this->storeManager->getStore($targetStoreCode)->getId();
+
+        return $result->setData($this->checkPopupTranslation($response, $currentStoreId, $targetStoreId));
+    }
+
+    /**
+     * @param array $response
+     * @param string $currentStoreId
+     * @param string $targetStoreId
+     * @return array
+     */
+    protected function checkPopupTranslation(array $response, string $currentStoreId, string $targetStoreId): array
+    {
+        if (empty($targetStoreId) || empty($currentStoreId)) {
+            return $response;
+        }
+
+        switch ($this->moduleConfig->getPopupLanguageMode()) {
+            case 'target_store':
+                $popupText = $this->moduleConfig->getRedirectPopupText($targetStoreId);
+                $acceptButton = $this->moduleConfig->getPopupAcceptButtonText($targetStoreId);
+                $declineButton = $this->moduleConfig->getPopupDeclineButtonText($targetStoreId);
+                $translationStoreId = $targetStoreId;
+                break;
+            case 'current_store':
+                $popupText = $this->moduleConfig->getRedirectPopupText($currentStoreId);
+                $acceptButton = $this->moduleConfig->getPopupAcceptButtonText($currentStoreId);
+                $declineButton = $this->moduleConfig->getPopupDeclineButtonText($currentStoreId);
+                $translationStoreId = $currentStoreId;
+                break;
+            case 'global':
+            default:
+                return $response;
+        }
+
+        $response[2] = $this->controllerHelper->translateCountryName($response[2], (int)$translationStoreId);
+        $response[] = $popupText;
+        $response[] = $acceptButton;
+        $response[] = $declineButton;
+
+        return $response;
     }
 }

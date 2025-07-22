@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.0] - 2025-07-22
+### Added / Changed
+- Added options to translate the popup that proposes the redirect based on geolocation.
+- Changed the scope for currency mapping, allowing them to be mapped with a global configuration.
+
 ## [1.1.2] - 2025-06-23
 ### Fixed
 - Removed double slash (`//`) in URLs after redirect.

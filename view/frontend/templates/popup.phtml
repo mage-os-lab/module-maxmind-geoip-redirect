@@ -5,7 +5,7 @@ $viewModel = $block->getViewModel();
 ?>
 <div id="geoip-redirect-popup" class="geoip-redirect-popup" style="display: none;">
     <div class="popup-content">
-        <p><?= $viewModel->getPopupMessage(); ?></p>
+        <p class="geoip-message"><?= $viewModel->getPopupMessage(); ?></p>
         <a href="<?= $block->getUrl('maxmind/geoip/redirect'); ?>" class="action primary action-primary">
             <?= __('Accept'); ?>
         </a>

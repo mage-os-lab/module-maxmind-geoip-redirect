@@ -20,6 +20,9 @@ class ModuleConfig extends AbstractHelper
     const string FORCED_IP = self::GENERAL_GROUP . 'forced_ip';
     const string IP_CHECK_METHOD = self::GENERAL_GROUP . 'ip_check_method';
     const string REDIRECT_POPUP_TEXT = self::GENERAL_GROUP . 'redirect_popup_text';
+    const string POPUP_LANGUAGE_MODE = self::GENERAL_GROUP . 'popup_language_mode';
+    const string POPUP_ACCEPT_BUTTON_TEXT = self::GENERAL_GROUP . 'redirect_popup_accept_button_text';
+    const string POPUP_DECLINE_BUTTON_TEXT = self::GENERAL_GROUP . 'redirect_popup_decline_button_text';
 
     const string ACCOUNT_ID = self::MAXMIND_SETTINGS_GROUP . 'account_id';
     const string LICENSE_KEY = self::MAXMIND_SETTINGS_GROUP . 'license_key';
@@ -66,11 +69,47 @@ class ModuleConfig extends AbstractHelper
     }
 
     /**
+     * @param int $storeId
      * @return string
      */
-    public function getRedirectPopupText(): string
+    public function getRedirectPopupText(int $storeId = 0): string
     {
-        return (string)$this->scopeConfig->getValue(self::REDIRECT_POPUP_TEXT);
+        return (string)$this->scopeConfig->getValue(self::REDIRECT_POPUP_TEXT, ScopeInterface::SCOPE_STORE, $storeId);
+    }
+
+    /**
+     * @param int $storeId
+     * @return string
+     */
+    public function getPopupAcceptButtonText(int $storeId): string
+    {
+        return (string)$this->scopeConfig->getValue(self::POPUP_ACCEPT_BUTTON_TEXT, ScopeInterface::SCOPE_STORE, $storeId);
+    }
+
+    /**
+     * @param int $storeId
+     * @return string
+     */
+    public function getPopupDeclineButtonText(int $storeId): string
+    {
+        return (string)$this->scopeConfig->getValue(self::POPUP_DECLINE_BUTTON_TEXT, ScopeInterface::SCOPE_STORE, $storeId);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPopupLanguageMode(): string
+    {
+        return (string)$this->scopeConfig->getValue(self::POPUP_LANGUAGE_MODE);
+    }
+
+    /**
+     * @param int $storeId
+     * @return string
+     */
+    public function getStoreLocale(int $storeId = 0): string
+    {
+        return (string)$this->scopeConfig->getValue('general/locale/code', ScopeInterface::SCOPE_STORE, $storeId);
     }
 
     /**
