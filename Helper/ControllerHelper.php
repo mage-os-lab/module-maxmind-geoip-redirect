@@ -101,7 +101,7 @@ class ControllerHelper
         $countryCollection = $this->countryCollectionFactory->create();
 
         foreach ($countryCollection as $country) {
-            if (strcasecmp($country->getName('en_US'), $name) === 0) {
+            if (strcasecmp((string)$country->getName('en_US'), $name) === 0) {
                 return $country->getName($toLocale);
             }
         }

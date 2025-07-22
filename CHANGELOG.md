@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.1] - 2025-07-22
+### Fixed
+- Fixed strcasecmp funtion usage for PHP 8
+
 ## [1.2.0] - 2025-07-22
 ### Added / Changed
 - Added options to translate the popup that proposes the redirect based on geolocation.
