@@ -9,32 +9,32 @@ use Magento\Framework\Serialize\SerializerInterface;
 
 class ModuleConfig extends AbstractHelper
 {
-    const string SECTION = 'maxmind_geoip_redirect/';
+    const SECTION = 'maxmind_geoip_redirect/';
 
-    const string GENERAL_GROUP = self::SECTION . 'general/';
-    const string MAXMIND_SETTINGS_GROUP = self::SECTION . 'maxmind_settings/';
-    const string COUNTRY_REDIRECT_SETTINGS = self::SECTION . 'country_redirect_settings/';
-    const string RESTRICTION = self::SECTION . 'restriction/';
+    const GENERAL_GROUP = self::SECTION . 'general/';
+    const MAXMIND_SETTINGS_GROUP = self::SECTION . 'maxmind_settings/';
+    const COUNTRY_REDIRECT_SETTINGS = self::SECTION . 'country_redirect_settings/';
+    const RESTRICTION = self::SECTION . 'restriction/';
 
-    const string ENABLE = self::GENERAL_GROUP . 'enable';
-    const string FORCED_IP = self::GENERAL_GROUP . 'forced_ip';
-    const string IP_CHECK_METHOD = self::GENERAL_GROUP . 'ip_check_method';
-    const string REDIRECT_POPUP_TEXT = self::GENERAL_GROUP . 'redirect_popup_text';
-    const string POPUP_LANGUAGE_MODE = self::GENERAL_GROUP . 'popup_language_mode';
-    const string POPUP_ACCEPT_BUTTON_TEXT = self::GENERAL_GROUP . 'redirect_popup_accept_button_text';
-    const string POPUP_DECLINE_BUTTON_TEXT = self::GENERAL_GROUP . 'redirect_popup_decline_button_text';
+    const ENABLE = self::GENERAL_GROUP . 'enable';
+    const FORCED_IP = self::GENERAL_GROUP . 'forced_ip';
+    const IP_CHECK_METHOD = self::GENERAL_GROUP . 'ip_check_method';
+    const REDIRECT_POPUP_TEXT = self::GENERAL_GROUP . 'redirect_popup_text';
+    const POPUP_LANGUAGE_MODE = self::GENERAL_GROUP . 'popup_language_mode';
+    const POPUP_ACCEPT_BUTTON_TEXT = self::GENERAL_GROUP . 'redirect_popup_accept_button_text';
+    const POPUP_DECLINE_BUTTON_TEXT = self::GENERAL_GROUP . 'redirect_popup_decline_button_text';
 
-    const string ACCOUNT_ID = self::MAXMIND_SETTINGS_GROUP . 'account_id';
-    const string LICENSE_KEY = self::MAXMIND_SETTINGS_GROUP . 'license_key';
-    const string DATABASE_DOWNLOAD_URL = self::MAXMIND_SETTINGS_GROUP . 'database_download_url';
+    const ACCOUNT_ID = self::MAXMIND_SETTINGS_GROUP . 'account_id';
+    const LICENSE_KEY = self::MAXMIND_SETTINGS_GROUP . 'license_key';
+    const DATABASE_DOWNLOAD_URL = self::MAXMIND_SETTINGS_GROUP . 'database_download_url';
 
-    const string AFFECTED_COUNTRIES = self::COUNTRY_REDIRECT_SETTINGS . 'affected_countries';
-    const string CURRENCY_MAPPING = self::COUNTRY_REDIRECT_SETTINGS . 'currency_mapping';
+    const AFFECTED_COUNTRIES = self::COUNTRY_REDIRECT_SETTINGS . 'affected_countries';
+    const CURRENCY_MAPPING = self::COUNTRY_REDIRECT_SETTINGS . 'currency_mapping';
 
-    const string EXCEPTED_IPS = self::RESTRICTION . 'ips';
-    const string EXCEPTED_URLS = self::RESTRICTION . 'urls';
-    const string EXCEPTED_USER_AGENTS = self::RESTRICTION . 'user_agents';
-    const string FIRST_VISIT_ONLY = self::RESTRICTION . 'first_visit_only';
+    const EXCEPTED_IPS = self::RESTRICTION . 'ips';
+    const EXCEPTED_URLS = self::RESTRICTION . 'urls';
+    const EXCEPTED_USER_AGENTS = self::RESTRICTION . 'user_agents';
+    const FIRST_VISIT_ONLY = self::RESTRICTION . 'first_visit_only';
 
     /**
      * @param Context $context
