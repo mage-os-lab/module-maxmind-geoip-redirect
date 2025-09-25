@@ -162,7 +162,8 @@ class ModuleConfig extends AbstractHelper
      */
     public function getAffectedCountries(int $storeId): array
     {
-        return explode(',', $this->scopeConfig->getValue(self::AFFECTED_COUNTRIES, ScopeInterface::SCOPE_STORE, $storeId));
+        $affectedCountries = $this->scopeConfig->getValue(self::AFFECTED_COUNTRIES, ScopeInterface::SCOPE_STORE, $storeId);
+        return $affectedCountries ? explode(',', $affectedCountries) : [];
     }
 
     public function getCurrencyMapping(string $countryCode, int $storeId = 0): string
