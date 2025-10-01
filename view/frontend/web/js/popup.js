@@ -20,7 +20,7 @@ define([
                     dataType: 'json',
                     success: function (response) {
                         if (response.length >= 2 && response[0] && response[1] !== redirectCookie) {
-                            $('#geoip-redirect-popup > .popup-content > p.geoip-message').html(function (_, html) {
+                            $('#geoip-redirect-popup > .popup-content > .geoip-message').html(function (_, html) {
                                 if (typeof response[3] === 'string' && response[3].trim() !== '') {
                                     html = response[3];
                                 }
