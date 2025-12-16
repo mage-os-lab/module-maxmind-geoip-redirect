@@ -1,0 +1,47 @@
+<?php
+/** @var Magento\Framework\View\Element\Template $block */
+/** @var MageOS\MaxMindGeoipRedirect\ViewModel\Popup $viewModel */
+
+$viewModel = $block->getViewModel();
+?>
+<script defer src="<?= $block->getViewFileUrl('MageOS_MaxMindGeoipRedirect::js/hyva/popup.js') ?>"></script>
+
+<div
+    id="geoip-redirect-popup"
+    class="
+        geoip-redirect-popup
+        fixed
+        right-0
+        bottom-0
+        top-30
+        w-96
+        max-w-full
+        p-4
+        bg-white
+        z-50
+        shadow-2xl
+        overflow-auto
+    "
+    x-data="geoipRedirectPopup({
+        storeCode: '<?= $viewModel->getStoreCode(); ?>',
+        checkUrl: '<?= $block->getUrl('maxmind/geoip/checkpopup'); ?>',
+        acceptUrl: '<?= $block->getUrl('maxmind/geoip/redirect'); ?>',
+        declineUrl: '<?= $block->getUrl('maxmind/geoip/decline'); ?>'
+    })"
+    x-init="init()"
+    x-show="visible"
+    x-cloak
+>
+    <div class="popup-content">
+        <p class="geoip-message" x-html="message"></p>
+        <div class="flex gap-2 mt-2">
+            <a :href="acceptUrl"
+               x-text="acceptLabel"
+               class="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"></a>
+
+            <a :href="declineUrl"
+               x-text="declineLabel"
+               class="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium bg-gray-200 text-gray-900 hover:bg-gray-300"></a>
+        </div>
+    </div>
+</div>
