@@ -8,14 +8,15 @@ define([
 
     $.widget('maxmind.geolitepopup', {
         options: {
-            storeCode: ''
+            storeCode: '',
+            checkUrl: ''
         },
 
         _create: function () {
             let redirectCookie = $.mage.cookies.get('maxmind_redirect');
             if (this.options.storeCode !== redirectCookie) {
                 $.ajax({
-                    url: window.BASE_URL + 'maxmind/geoip/checkpopup',
+                    url: this.options.checkUrl,
                     type: 'GET',
                     dataType: 'json',
                     success: function (response) {

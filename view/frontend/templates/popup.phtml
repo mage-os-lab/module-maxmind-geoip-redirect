@@ -23,7 +23,8 @@ $viewModel = $block->getViewModel();
     {
         "#geoip-redirect-popup": {
             "MageOS_MaxMindGeoipRedirect/js/popup": {
-                "storeCode": "<?= $viewModel->getStoreCode(); ?>"
+                "storeCode": "<?= $viewModel->getStoreCode(); ?>",
+                "checkUrl": "<?= $block->getUrl('maxmind/geoip/checkpopup'); ?>"
             }
         }
     }
