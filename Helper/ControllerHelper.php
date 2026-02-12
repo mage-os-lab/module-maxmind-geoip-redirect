@@ -17,11 +17,17 @@ use Magento\Framework\Stdlib\Cookie\FailureToSendException;
 class ControllerHelper
 {
     /**
+     * @var array|null
+     */
+    private ?array $countryStoreMap = null;
+
+    /**
      * @param HttpRequest $httpRequest
      * @param StoreManagerInterface $storeManager
      * @param ModuleConfig $moduleConfig
      * @param CookieMetadataFactory $cookieMetadataFactory
      * @param CookieManagerInterface $cookieManager
+     * @param CollectionFactory $countryCollectionFactory
      */
     public function __construct(
         protected HttpRequest $httpRequest,
@@ -48,15 +54,17 @@ class ControllerHelper
      */
     public function getStoreViewByCountry($countryCode): false|string
     {
-        foreach ($this->storeManager->getStores() as $store) {
-            $redirectCountryList = $this->moduleConfig->getAffectedCountries($store->getId());
-
-            if (in_array($countryCode, $redirectCountryList)) {
-                return $store->getCode();
+        if ($this->countryStoreMap === null) {
+            $this->countryStoreMap = [];
+            foreach ($this->storeManager->getStores() as $store) {
+                $redirectCountryList = $this->moduleConfig->getAffectedCountries($store->getId());
+                foreach ($redirectCountryList as $country) {
+                    $this->countryStoreMap[$country] = $store->getCode();
+                }
             }
         }
 
-        return false;
+        return $this->countryStoreMap[$countryCode] ?? false;
     }
 
     /**
@@ -99,11 +107,16 @@ class ControllerHelper
     {
         $toLocale = $this->moduleConfig->getStoreLocale($storeId);
         $countryCollection = $this->countryCollectionFactory->create();
+        $countryCollection->addFieldToFilter('country_id', ['neq' => '']);
 
+        $nameIndex = [];
         foreach ($countryCollection as $country) {
-            if (strcasecmp((string)$country->getName('en_US'), $name) === 0) {
-                return $country->getName($toLocale);
-            }
+            $nameIndex[strtolower((string)$country->getName('en_US'))] = $country;
+        }
+
+        $key = strtolower($name);
+        if (isset($nameIndex[$key])) {
+            return $nameIndex[$key]->getName($toLocale);
         }
 
         return $name;
