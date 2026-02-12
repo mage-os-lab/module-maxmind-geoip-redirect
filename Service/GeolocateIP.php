@@ -2,7 +2,7 @@
 
 namespace MageOS\MaxMindGeoipRedirect\Service;
 
-use MageOS\MaxMindGeoipRedirect\Api\GeoloateIPInterface;
+use MageOS\MaxMindGeoipRedirect\Api\GeolocateIPInterface;
 use MageOS\MaxMindGeoipRedirect\Api\AttributeProvider;
 use MageOS\MaxMindGeoipRedirect\Helper\ModuleConfig;
 use GeoIp2\WebService\ClientFactory;
@@ -19,7 +19,7 @@ use MaxMind\Db\Reader\InvalidDatabaseException;
 use Magento\Framework\Exception\FileSystemException;
 use InvalidArgumentException;
 
-class GeoloateIP implements GeoloateIPInterface, AttributeProvider
+class GeolocateIP implements GeolocateIPInterface
 {
     /**
      * @param ModuleConfig $moduleConfig
@@ -49,9 +49,9 @@ class GeoloateIP implements GeoloateIPInterface, AttributeProvider
 
         $ip = empty($this->moduleConfig->forcedIp()) ? $ip : $this->moduleConfig->forcedIp();
 
-        if ($this->moduleConfig->getIpCheckMethod() === self::CHECK_IP_API) {
+        if ($this->moduleConfig->getIpCheckMethod() === AttributeProvider::CHECK_IP_API) {
             return $this->useApi($ip);
-        } elseif ($this->moduleConfig->getIpCheckMethod() === self::CHECK_IP_LOCAL) {
+        } elseif ($this->moduleConfig->getIpCheckMethod() === AttributeProvider::CHECK_IP_LOCAL) {
             return $this->useLocal($ip);
         }
 
@@ -66,7 +66,7 @@ class GeoloateIP implements GeoloateIPInterface, AttributeProvider
     {
         $accountId = $this->moduleConfig->getAccountId();
         $licenseKey = $this->moduleConfig->getLicenseKey();
-        $options = ['host' => self::GEOLITE2_HOST];
+        $options = ['host' => AttributeProvider::GEOLITE2_HOST];
 
         $client = $this->clientFactory->create(['accountId' => $accountId, 'licenseKey' => $licenseKey, 'options' => $options]);
 
@@ -89,8 +89,8 @@ class GeoloateIP implements GeoloateIPInterface, AttributeProvider
             return $this->useApi($ip);
         }
 
-        $databaseIpPath .= self::IP_DB_DIRECTORY . DIRECTORY_SEPARATOR;
-        $databaseIpPath .= self::GEOLITE2_COUNTRY_DB;
+        $databaseIpPath .= AttributeProvider::IP_DB_DIRECTORY . DIRECTORY_SEPARATOR;
+        $databaseIpPath .= AttributeProvider::GEOLITE2_COUNTRY_DB;
 
         if (!$this->file->fileExists($databaseIpPath)) {
             return $this->useApi($ip);

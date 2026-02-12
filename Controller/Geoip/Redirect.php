@@ -8,7 +8,7 @@ use MageOS\MaxMindGeoipRedirect\Helper\ModuleConfig;
 use MageOS\MaxMindGeoipRedirect\Helper\ControllerHelper;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\Controller\Result\Redirect as ResultRedirect;
-use MageOS\MaxMindGeoipRedirect\Api\GeoloateIPInterface;
+use MageOS\MaxMindGeoipRedirect\Api\GeolocateIPInterface;
 use MageOS\MaxMindGeoipRedirect\Api\CurrencyManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\UrlInterface;
@@ -27,7 +27,7 @@ class Redirect implements HttpGetActionInterface
      * @param ModuleConfig $moduleConfig
      * @param ControllerHelper $controllerHelper
      * @param RedirectFactory $redirectFactory
-     * @param GeoloateIPInterface $geoloateIP
+     * @param GeolocateIPInterface $geoloateIP
      * @param CurrencyManagerInterface $currencyManager
      * @param StoreManagerInterface $storeManager
      * @param UrlInterface $urlBuilder
@@ -40,7 +40,7 @@ class Redirect implements HttpGetActionInterface
         protected ModuleConfig $moduleConfig,
         protected ControllerHelper $controllerHelper,
         protected RedirectFactory $redirectFactory,
-        protected GeoloateIPInterface $geoloateIP,
+        protected GeolocateIPInterface $geoloateIP,
         protected CurrencyManagerInterface $currencyManager,
         protected StoreManagerInterface $storeManager,
         protected UrlInterface $urlBuilder,
