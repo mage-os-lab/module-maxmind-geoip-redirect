@@ -22,6 +22,9 @@ $viewModel = $block->getViewModel();
         shadow-2xl
         overflow-auto
     "
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="geoip-popup-title"
     x-data="geoipRedirectPopup({
         storeCode: '<?= $viewModel->getStoreCode(); ?>',
         checkUrl: '<?= $block->getUrl('maxmind/geoip/checkpopup'); ?>',
@@ -31,12 +34,14 @@ $viewModel = $block->getViewModel();
     x-init="init()"
     x-show="visible"
     x-cloak
+    @keydown.escape.window="if (visible) { window.location.href = declineUrl; }"
 >
     <div class="popup-content">
-        <p class="geoip-message" x-html="message"></p>
+        <p id="geoip-popup-title" class="geoip-message" x-html="message"></p>
         <div class="flex gap-2 mt-2">
             <a :href="acceptUrl"
                x-text="acceptLabel"
+               x-ref="acceptBtn"
                class="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"></a>
 
             <a :href="declineUrl"

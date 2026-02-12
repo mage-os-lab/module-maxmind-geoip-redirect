@@ -31,6 +31,9 @@ function geoipRedirectPopup(config) {
                         }
 
                         this.visible = true;
+                        this.$nextTick(() => {
+                            this.$refs.acceptBtn && this.$refs.acceptBtn.focus();
+                        });
                     }
                 });
         },

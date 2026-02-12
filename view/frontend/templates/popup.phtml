@@ -3,9 +3,14 @@
 /** @var $viewModel MageOS\MaxMindGeoipRedirect\ViewModel\Popup */
 $viewModel = $block->getViewModel();
 ?>
-<div id="geoip-redirect-popup" class="geoip-redirect-popup" style="display: none;">
+<div id="geoip-redirect-popup"
+     class="geoip-redirect-popup"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="geoip-popup-title"
+     style="display: none;">
     <div class="popup-content">
-        <div class="geoip-message"><?= $viewModel->getPopupMessage(); ?></div>
+        <div id="geoip-popup-title" class="geoip-message"><?= $viewModel->getPopupMessage(); ?></div>
         <a href="<?= $block->getUrl('maxmind/geoip/redirect'); ?>" class="action primary action-primary">
             <?= __('Accept'); ?>
         </a>

@@ -37,7 +37,15 @@ define([
                                     return response[5];
                                 }
                             });
-                            $('#geoip-redirect-popup').show();
+                            var $popup = $('#geoip-redirect-popup');
+                            $popup.show();
+                            $popup.find('.action-primary').focus();
+
+                            $(document).on('keydown.geoip', function (e) {
+                                if (e.key === 'Escape') {
+                                    window.location.href = $popup.find('.action-secondary').attr('href');
+                                }
+                            });
                         }
                     }
                 });
