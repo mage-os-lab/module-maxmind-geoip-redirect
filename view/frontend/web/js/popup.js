@@ -19,22 +19,22 @@ define([
                     type: 'GET',
                     dataType: 'json',
                     success: function (response) {
-                        if (response.length >= 2 && response[0] && response[1] !== redirectCookie) {
+                        if (response.showPopup && response.targetStore !== redirectCookie) {
                             $('#geoip-redirect-popup > .popup-content > .geoip-message').html(function (_, html) {
-                                if (typeof response[3] === 'string' && response[3].trim() !== '') {
-                                    html = response[3];
+                                if (typeof response.popupText === 'string' && response.popupText.trim() !== '') {
+                                    html = response.popupText;
                                 }
 
-                                return html.replace('{{geolocated_country}}', response[2]);
+                                return html.replace('{{geolocated_country}}', response.countryName);
                             });
                             $('#geoip-redirect-popup > .popup-content .action-primary').html(function (_, html) {
-                                if (typeof response[3] === 'string' && response[3].trim() !== '') {
-                                    return response[4];
+                                if (typeof response.acceptLabel === 'string') {
+                                    return response.acceptLabel;
                                 }
                             });
                             $('#geoip-redirect-popup > .popup-content .action-secondary').html(function (_, html) {
-                                if (typeof response[3] === 'string' && response[3].trim() !== '') {
-                                    return response[5];
+                                if (typeof response.declineLabel === 'string') {
+                                    return response.declineLabel;
                                 }
                             });
                             var $popup = $('#geoip-redirect-popup');

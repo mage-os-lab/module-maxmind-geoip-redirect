@@ -65,14 +65,14 @@ class CheckPopup implements HttpGetActionInterface
         $result = $this->jsonFactory->create();
 
         if (!$this->moduleConfig->isEnable()) {
-            return $result->setData([false]);
+            return $result->setData(['showPopup' => false]);
         }
 
         $currentStore = $this->storeManager->getStore();
         $currentStoreCode = $currentStore->getCode();
 
         if ($this->cookieManager->getCookie(AttributeProvider::MAXMIND_COOKIE) === $currentStoreCode) {
-            return $result->setData([false]);
+            return $result->setData(['showPopup' => false]);
         }
 
         $referrerUrl = $this->redirect->getRefererUrl();
@@ -81,27 +81,27 @@ class CheckPopup implements HttpGetActionInterface
         $currentIp = $this->controllerHelper->getClientIp();
 
         if (!$this->moduleConfig->showPopup($referrerUrl, $userAgent, $currentIp, $storeId)) {
-            return $result->setData([false]);
+            return $result->setData(['showPopup' => false]);
         }
 
         $geolocationCountryCode = $this->geolocateIP->execute($currentIp);
 
         if (empty($geolocationCountryCode)) {
-            return $result->setData([false]);
+            return $result->setData(['showPopup' => false]);
         }
 
         $targetStoreCode = $this->controllerHelper->getStoreViewByCountry($geolocationCountryCode);
 
         if ($targetStoreCode === $currentStoreCode) {
-            return $result->setData([false]);
+            return $result->setData(['showPopup' => false]);
         }
 
         $country = $this->countryFactory->create()->loadByCode($geolocationCountryCode);
 
         $response = [
-            true,
-            $targetStoreCode ?: $this->controllerHelper->getDefaultStoreView(),
-            $country->getName('en_US')
+            'showPopup' => true,
+            'targetStore' => $targetStoreCode ?: $this->controllerHelper->getDefaultStoreView(),
+            'countryName' => $country->getName('en_US')
         ];
 
         $this->eventManager->dispatch(
@@ -149,10 +149,10 @@ class CheckPopup implements HttpGetActionInterface
                 return $response;
         }
 
-        $response[2] = $this->controllerHelper->translateCountryName($response[2], (int)$translationStoreId);
-        $response[] = $popupText;
-        $response[] = $acceptButton;
-        $response[] = $declineButton;
+        $response['countryName'] = $this->controllerHelper->translateCountryName($response['countryName'], (int)$translationStoreId);
+        $response['popupText'] = $popupText;
+        $response['acceptLabel'] = $acceptButton;
+        $response['declineLabel'] = $declineButton;
 
         return $response;
     }

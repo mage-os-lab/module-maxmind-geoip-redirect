@@ -17,17 +17,17 @@ function geoipRedirectPopup(config) {
             fetch(config.checkUrl, { credentials: 'same-origin' })
                 .then(r => r.json())
                 .then(response => {
-                    if (response.length >= 2 && response[0] && response[1] !== redirectCookie) {
-                        if (typeof response[3] === 'string' && response[3].trim() !== '') {
-                            this.message = response[3].replace('{{geolocated_country}}', response[2]);
+                    if (response.showPopup && response.targetStore !== redirectCookie) {
+                        if (typeof response.popupText === 'string' && response.popupText.trim() !== '') {
+                            this.message = response.popupText.replace('{{geolocated_country}}', response.countryName);
                         }
 
-                        if (typeof response[4] === 'string') {
-                            this.acceptLabel = response[4];
+                        if (typeof response.acceptLabel === 'string') {
+                            this.acceptLabel = response.acceptLabel;
                         }
 
-                        if (typeof response[5] === 'string') {
-                            this.declineLabel = response[5];
+                        if (typeof response.declineLabel === 'string') {
+                            this.declineLabel = response.declineLabel;
                         }
 
                         this.visible = true;
