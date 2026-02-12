@@ -10,7 +10,7 @@ use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\App\Config\ValueFactory;
-use Exception;
+use Magento\Framework\Exception\LocalizedException;
 
 class IpDatabaseImportCron extends Value
 {
@@ -45,7 +45,7 @@ class IpDatabaseImportCron extends Value
 
     /**
      * @return IpDatabaseImportCron
-     * @throws Exception
+     * @throws LocalizedException
      */
     public function afterSave(): IpDatabaseImportCron
     {
@@ -61,8 +61,8 @@ class IpDatabaseImportCron extends Value
                 $this->cronStringPath
             )->save();
 
-        } catch (Exception $e) {
-            throw new Exception(__('Some Thing Want Wrong , We can\'t save the cron expression.'));
+        } catch (\Exception $e) {
+            throw new LocalizedException(__('Unable to save the cron expression.'));
         }
 
         return parent::afterSave();
