@@ -44,7 +44,24 @@ define([
 
                             $(document).on('keydown.geoip', function (e) {
                                 if (e.key === 'Escape') {
-                                    window.location.href = $popup.find('.action-secondary').attr('href');
+                                    var declineHref = $popup.find('.action-secondary').attr('href');
+                                    if (declineHref) {
+                                        window.location.href = declineHref;
+                                    }
+                                }
+
+                                if (e.key === 'Tab') {
+                                    var $focusable = $popup.find('a, button, [tabindex]:not([tabindex="-1"])');
+                                    var $first = $focusable.first();
+                                    var $last = $focusable.last();
+
+                                    if (e.shiftKey && document.activeElement === $first[0]) {
+                                        e.preventDefault();
+                                        $last.focus();
+                                    } else if (!e.shiftKey && document.activeElement === $last[0]) {
+                                        e.preventDefault();
+                                        $first.focus();
+                                    }
                                 }
                             });
                         }

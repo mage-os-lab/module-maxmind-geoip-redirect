@@ -35,7 +35,8 @@ $viewModel = $block->getViewModel();
     x-init="init()"
     x-show="visible"
     x-cloak
-    @keydown.escape.window="if (visible) { window.location.href = declineUrl; }"
+    @keydown.escape.window="if (visible && declineUrl) { window.location.href = declineUrl; }"
+    @keydown.tab.window="if (visible) { $event.preventDefault(); const focusable = $el.querySelectorAll('a, button, [tabindex]:not([tabindex=\'-1\'])'); const arr = Array.from(focusable); const idx = arr.indexOf(document.activeElement); if ($event.shiftKey) { arr[(idx - 1 + arr.length) % arr.length].focus(); } else { arr[(idx + 1) % arr.length].focus(); } }"
 >
     <div class="popup-content">
         <p id="geoip-popup-title" class="geoip-message" x-html="message"></p>
