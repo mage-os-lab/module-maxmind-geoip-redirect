@@ -27,7 +27,7 @@ class Redirect implements HttpGetActionInterface
      * @param ModuleConfig $moduleConfig
      * @param ControllerHelper $controllerHelper
      * @param RedirectFactory $redirectFactory
-     * @param GeolocateIPInterface $geoloateIP
+     * @param GeolocateIPInterface $geolocateIP
      * @param CurrencyManagerInterface $currencyManager
      * @param StoreManagerInterface $storeManager
      * @param UrlInterface $urlBuilder
@@ -40,7 +40,7 @@ class Redirect implements HttpGetActionInterface
         protected ModuleConfig $moduleConfig,
         protected ControllerHelper $controllerHelper,
         protected RedirectFactory $redirectFactory,
-        protected GeolocateIPInterface $geoloateIP,
+        protected GeolocateIPInterface $geolocateIP,
         protected CurrencyManagerInterface $currencyManager,
         protected StoreManagerInterface $storeManager,
         protected UrlInterface $urlBuilder,
@@ -66,7 +66,7 @@ class Redirect implements HttpGetActionInterface
             return $this->returnRedirect($referrerUrl);
         }
 
-        $geolocationCountryCode = $this->geoloateIP->execute($this->controllerHelper->getClientIp());
+        $geolocationCountryCode = $this->geolocateIP->execute($this->controllerHelper->getClientIp());
 
         if (empty($geolocationCountryCode)) {
             return $this->returnRedirect($referrerUrl);
