@@ -19,7 +19,12 @@ class ControllerHelper
     /**
      * @var array|null
      */
-    private ?array $countryStoreMap = null;
+    protected ?array $countryStoreMap = null;
+
+    /**
+     * @var array|null
+     */
+    protected ?array $countryNameIndex = null;
 
     /**
      * @param HttpRequest $httpRequest
@@ -105,18 +110,19 @@ class ControllerHelper
      */
     public function translateCountryName(string $name, int $storeId): string
     {
-        $toLocale = $this->moduleConfig->getStoreLocale($storeId);
-        $countryCollection = $this->countryCollectionFactory->create();
-        $countryCollection->addFieldToFilter('country_id', ['neq' => '']);
-
-        $nameIndex = [];
-        foreach ($countryCollection as $country) {
-            $nameIndex[strtolower((string)$country->getName('en_US'))] = $country;
+        if ($this->countryNameIndex === null) {
+            $this->countryNameIndex = [];
+            $countryCollection = $this->countryCollectionFactory->create();
+            $countryCollection->addFieldToFilter('country_id', ['neq' => '']);
+            foreach ($countryCollection as $country) {
+                $this->countryNameIndex[strtolower((string)$country->getName('en_US'))] = $country;
+            }
         }
 
         $key = strtolower($name);
-        if (isset($nameIndex[$key])) {
-            return $nameIndex[$key]->getName($toLocale);
+        if (isset($this->countryNameIndex[$key])) {
+            $toLocale = $this->moduleConfig->getStoreLocale($storeId);
+            return $this->countryNameIndex[$key]->getName($toLocale);
         }
 
         return $name;
