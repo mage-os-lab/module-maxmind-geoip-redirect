@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1] - 2026-04-07
+### Fixed
+- Fixed remaining `$geoloateIP` variable typo in Redirect controller
+- Cached country collection in `translateCountryName()` to avoid reloading per call
+- Added focus trap to popup for keyboard accessibility (Luma + Hyva)
+- Added Escape key guard to prevent navigation to undefined when decline link is missing (Luma)
+
 ## [2.0.0] - 2026-02-12
 ### Breaking Changes
 - Renamed `GeoloateIPInterface` to `GeolocateIPInterface` and `GeoloateIP` to `GeolocateIP`
