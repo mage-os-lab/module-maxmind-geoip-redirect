@@ -68,7 +68,7 @@
                     <validate>required-entry</validate>
                 </field>
                 <field id="popup_language_mode" translate="label comment" type="select" sortOrder="65" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Popup langue mode</label>
+                    <label>Popup language mode</label>
                     <source_model>MageOS\MaxMindGeoipRedirect\Model\Config\Source\PopupLanguageMode</source_model>
                     <comment><![CDATA[Selecting "target store", the text set for the store view to which the user will be redirected will be displayed.
                         <br>Selecting "current store", the text set for the store view in which the user is currently located will be displayed.
