@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.0.2] - 2026-04-17
+### Added
+- PHP 8.4 support 
+
 ## [2.0.1] - 2026-04-07
 ### Fixed
 - Fixed remaining `$geoloateIP` variable typo in Redirect controller
