@@ -50,7 +50,7 @@ class GeolocateIP extends Command
      * @return int|null
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (empty($input->getOption('ip'))) {
             throw new Exception('IP address is required.');
