@@ -1,11 +1,11 @@
 <?php
 /** @var Magento\Framework\View\Element\Template $block */
+/** @var Magento\Framework\Escaper $escaper */
+/** @var Hyva\Theme\ViewModel\HyvaCsp $hyvaCsp */
 /** @var MageOS\MaxMindGeoipRedirect\ViewModel\Popup $viewModel */
 
 $viewModel = $block->getViewModel();
 ?>
-<script defer src="<?= $block->getViewFileUrl('MageOS_MaxMindGeoipRedirect::js/hyva/popup.js') ?>"></script>
-
 <div
     id="geoip-redirect-popup"
     class="
@@ -27,10 +27,10 @@ $viewModel = $block->getViewModel();
     aria-modal="true"
     aria-labelledby="geoip-popup-title"
     x-data="geoipRedirectPopup({
-        storeCode: '<?= $viewModel->getStoreCode(); ?>',
-        checkUrl: '<?= $block->getUrl('maxmind/geoip/checkpopup'); ?>',
-        acceptUrl: '<?= $block->getUrl('maxmind/geoip/redirect'); ?>',
-        declineUrl: '<?= $block->getUrl('maxmind/geoip/decline'); ?>'
+        storeCode: '<?= $escaper->escapeJs($viewModel->getStoreCode()) ?>',
+        checkUrl: '<?= $escaper->escapeJs($block->getUrl('maxmind/geoip/checkpopup')) ?>',
+        acceptUrl: '<?= $escaper->escapeJs($block->getUrl('maxmind/geoip/redirect')) ?>',
+        declineUrl: '<?= $escaper->escapeJs($block->getUrl('maxmind/geoip/decline')) ?>'
     })"
     x-init="init()"
     x-show="visible"
@@ -52,3 +52,53 @@ $viewModel = $block->getViewModel();
         </div>
     </div>
 </div>
+
+<script>
+    function geoipRedirectPopup(config) {
+        return {
+            visible: false,
+            message: '',
+            acceptLabel: 'Accept',
+            declineLabel: 'Decline',
+            acceptUrl: config.acceptUrl,
+            declineUrl: config.declineUrl,
+
+            init() {
+                const redirectCookie = this.getCookie('maxmind_redirect');
+
+                if (config.storeCode === redirectCookie) {
+                    return;
+                }
+
+                fetch(config.checkUrl, { credentials: 'same-origin' })
+                    .then(r => r.json())
+                    .then(response => {
+                        if (response.showPopup && response.targetStore !== redirectCookie) {
+                            if (typeof response.popupText === 'string' && response.popupText.trim() !== '') {
+                                this.message = response.popupText.replace('{{geolocated_country}}', response.countryName);
+                            }
+
+                            if (typeof response.acceptLabel === 'string') {
+                                this.acceptLabel = response.acceptLabel;
+                            }
+
+                            if (typeof response.declineLabel === 'string') {
+                                this.declineLabel = response.declineLabel;
+                            }
+
+                            this.visible = true;
+                            this.$nextTick(() => {
+                                this.$refs.acceptBtn && this.$refs.acceptBtn.focus();
+                            });
+                        }
+                    });
+            },
+
+            getCookie(name) {
+                const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+                return match ? decodeURIComponent(match[2]) : null;
+            }
+        };
+    }
+</script>
+<?php $hyvaCsp->registerInlineScript() ?>
