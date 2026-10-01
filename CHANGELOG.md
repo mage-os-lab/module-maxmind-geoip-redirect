@@ -4,6 +4,13 @@
 ### Fixed
 - PHP 8.5 compatibility: explicit nullable type for `$name` parameter in `GeolocateIP` console command
 
+## [2.1.0] - 2026-09-26
+### Changed
+- Moved Hyvä popup Alpine.js component from `web/js/hyva/popup.js` into the `hyva/popup.phtml` template for CSP compliance
+
+### Fixed
+- Symfony 7 compatibility: `GeolocateIP` console command `execute()` return type changed from `?int` to `int`
+
 ## [2.0.2] - 2026-04-17
 ### Added
 - PHP 8.4 support 
