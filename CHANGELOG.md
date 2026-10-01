@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.1.1] - 2026-10-01
+### Fixed
+- PHP 8.5 compatibility: explicit nullable type for `$name` parameter in `GeolocateIP` console command
+
 ## [2.0.2] - 2026-04-17
 ### Added
 - PHP 8.4 support 
