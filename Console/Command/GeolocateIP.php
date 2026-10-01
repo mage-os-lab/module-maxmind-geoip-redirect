@@ -23,7 +23,7 @@ class GeolocateIP extends Command
         protected GeolocateIPInterface $geolocateIP,
         protected ModuleConfig $moduleConfig,
         protected CountryFactory $countryFactory,
-        string $name = null
+        ?string $name = null
     ) {
         parent::__construct($name);
     }
