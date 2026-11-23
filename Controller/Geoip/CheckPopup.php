@@ -114,7 +114,7 @@ class CheckPopup implements HttpGetActionInterface
         );
 
         $currentStoreId = (string) $currentStore->getId();
-        $targetStoreId = (string) $this->storeManager->getStore($targetStoreCode)->getId();
+        $targetStoreId = (string) $this->storeManager->getStore($response['targetStore'])->getId();
 
         return $result->setData($this->checkPopupTranslation($response, $currentStoreId, $targetStoreId));
     }
