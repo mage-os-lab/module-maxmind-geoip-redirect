@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.1.2] - 2026-11-23
+### Fixed
+- `CheckPopup` controller threw `NoSuchEntityException` when the geolocated country was not mapped to any store view: target store id is now resolved from the default store view fallback
+
 ## [2.1.1] - 2026-10-01
 ### Fixed
 - PHP 8.5 compatibility: explicit nullable type for `$name` parameter in `GeolocateIP` console command
